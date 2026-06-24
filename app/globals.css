@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+   Streak — design tokens
+   Palette from the brief: orange, green, white, black.
+   Green is used as the bioluminescent energy; orange as the warm
+   secondary pulse; near-black soil; a twilight sky up top.
+ * ------------------------------------------------------------------ */
+:root {
+  --green: #7DFF57;
+  --green-deep: #1f8f4d;
+  --orange: #ff7a18;
+  --white: #f5f3ec;
+
+  --sky-top: #140a33;
+  --sky-bottom: #3a2a6b;
+  --grass: #3f7a23;
+  --soil-top: #241a12;
+  --soil-bottom: #070503;
+
+  --font-display: "Syne", system-ui, sans-serif;
+  --font-body: "Space Grotesk", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smoothing; avoid double-smoothing */
+}
+
+body {
+  margin: 0;
+  background: var(--soil-bottom);
+  color: var(--white);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* A faint film-grain / fog over the whole page for the "mystical" feel */
+.atmosphere::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  background: radial-gradient(
+    120% 80% at 50% 0%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  mix-blend-mode: multiply;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Glow helpers ----------------------------------------------------- */
+.text-glow-green {
+  color: var(--white);
+  text-shadow:
+    0 0 8px rgba(70, 227, 122, 0.55),
+    0 0 22px rgba(70, 227, 122, 0.35);
+}
+.text-glow-orange {
+  color: var(--white);
+  text-shadow:
+    0 0 8px rgba(255, 122, 24, 0.55),
+    0 0 22px rgba(255, 122, 24, 0.3);
+}
+
+/* Grass blades sway ------------------------------------------------ */
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2.5deg);
+  }
+  50% {
+    transform: rotate(2.5deg);
+  }
+}
+
+/* Drifting clouds -------------------------------------------------- */
+@keyframes drift {
+  from {
+    transform: translateX(-10%);
+  }
+  to {
+    transform: translateX(110%);
+  }
+}
+
+/* Slow pulse for the logo halo ------------------------------------- */
+@keyframes halo {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.12);
+  }
+}
+
+/* Bob the logo gently like a mushroom in a breeze ------------------ */
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Scroll hint chevron --------------------------------------------- */
+@keyframes hint {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grass-blade,
+  .cloud,
+  .logo-halo,
+  .logo-bob,
+  .scroll-hint {
+    animation: none !important;
+  }
+}

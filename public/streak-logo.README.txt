@@ -1,0 +1,5 @@
+streak-logo.svg is Matthew's original vector file (unmodified).
+
+The site uses the mark inline via components/graphics/StreakLogo.tsx (so it can
+glow and inherit the brand-green token). This raw file is kept here for favicons,
+social images, press, etc.
