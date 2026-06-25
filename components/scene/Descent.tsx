@@ -116,7 +116,7 @@ export default function Descent() {
         ))}
 
         {/* a hint that there is more below */}
-        <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs uppercase tracking-[0.3em] text-white/40">
+        <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs lg:text-xl uppercase tracking-[0.3em] text-white animate-pulse">
           keep digging
         </p>
       </div>

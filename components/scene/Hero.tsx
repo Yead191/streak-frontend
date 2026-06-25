@@ -8,9 +8,9 @@ import StreakLogo from "@/components/graphics/StreakLogo";
 import Grass from "../graphics/Grass";
 
 const CLOUDS = [
-  { top: "14%", scale: 1, dur: 60, delay: 0, opacity: 0.8 },
-  { top: "26%", scale: 0.7, dur: 80, delay: -30, opacity: 0.6 },
-  { top: "9%", scale: 0.5, dur: 95, delay: -55, opacity: 0.5 },
+  { top: "14%", left: "10%", scale: 1, dur: 60, delay: 0, opacity: 0.8 },
+  { top: "26%", right: "10%", scale: 0.7, dur: 80, delay: -30, opacity: 0.6 },
+  { top: "9%", left: "45%", scale: 0.5, dur: 95, delay: -55, opacity: 0.5 },
 ];
 
 export default function Hero() {
@@ -73,7 +73,8 @@ export default function Hero() {
             className="cloud absolute"
             style={{
               top: c.top,
-              left: 0,
+              ...(c.left ? { left: c.left } : {}),
+              ...(c.right ? { right: c.right } : {}),
               opacity: c.opacity,
               transform: `scale(${c.scale})`,
               animation: `drift ${c.dur}s linear ${c.delay}s infinite`,
