@@ -43,8 +43,10 @@ export default function Hero() {
       ref={root}
       className="relative h-svh w-full overflow-hidden"
       style={{
+        // background:
+        //   "linear-gradient(180deg, var(--sky-top) 10%, var(--sky-bottom) 41%, var(--grass) 53%, var(--soil-top) 100%)",
         background:
-          "linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 41%, var(--grass) 53%, var(--soil-top) 100%)",
+          "linear-gradient(180deg, var(--sky-top) 10%, var(--sky-bottom) 41%, var(--grass) 50%, var(--soil-top) 100%)"
       }}
       aria-label="Streak — surface"
     >

@@ -45,16 +45,17 @@ export default function Manifesto() {
     <section
       ref={section}
       className="relative flex min-h-[120vh] w-full flex-col items-center justify-center px-6 py-32"
-      style={{ background: "var(--soil-bottom)" }}
+      style={{
+        background: "var(--soil-bottom)",
+      }}
       aria-label="Welcome to Streak"
     >
       <div className="max-w-3xl text-center">
         {LINES.map((line, i) => (
           <p
             key={i}
-            className={`manifesto-line font-display mb-2 text-balance text-2xl font-semibold leading-tight sm:text-4xl md:text-5xl ${
-              i === 0 ? "text-glow-green mb-6" : ""
-            } ${i >= 3 && i <= 4 ? "text-glow-orange" : ""}`}
+            className={`manifesto-line font-display mb-2 text-balance text-2xl font-semibold leading-tight sm:text-4xl md:text-5xl ${i === 0 ? "text-glow-green mb-6" : ""
+              } ${i >= 3 && i <= 4 ? "text-glow-orange" : ""}`}
           >
             {line}
           </p>
