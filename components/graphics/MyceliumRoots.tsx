@@ -1,8 +1,10 @@
 /**
  * The mycelium network. Each path is drawn twice — a soft blurred copy for
- * the bioluminescent glow and a crisp copy on top. Both carry the `.root`
- * class so the Descent timeline can "draw" them with stroke-dashoffset as the
- * visitor scrolls. Colours alternate green / orange per the brief.
+ * the bioluminescent glow and a crisp copy on top. The glow layer renders
+ * fully from the start as a faint "where the roots will grow" preview; only
+ * the crisp layer carries the `.root` class, so it's the one the Descent
+ * timeline "draws" with stroke-dashoffset as the visitor scrolls.
+ * Colours alternate green / orange per the brief.
  */
 const ROOTS: { d: string; color: "green" | "orange"; w: number }[] = [
   {
@@ -56,12 +58,11 @@ export default function MyceliumRoots({
         </filter>
       </defs>
 
-      {/* soft glow layer */}
-      <g filter="url(#rootGlow)" opacity="0.7">
+      {/* soft glow layer — always fully rendered as a faint preview */}
+      <g filter="url(#rootGlow)" opacity="0.4">
         {ROOTS.map((r, i) => (
           <path
             key={`g-${i}`}
-            className="root"
             d={r.d}
             fill="none"
             stroke={stroke(r.color)}
