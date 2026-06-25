@@ -44,7 +44,7 @@ export default function Hero() {
       className="relative h-svh w-full overflow-hidden"
       style={{
         background:
-          "linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 58%, var(--grass) 70%, var(--soil-top) 100%)",
+          "linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 41%, var(--grass) 53%, var(--soil-top) 100%)",
       }}
       aria-label="Streak — surface"
     >
@@ -105,7 +105,9 @@ export default function Hero() {
             animation: "halo 3.2s ease-in-out infinite",
           }}
         />
-        <StreakLogo className="hero-logo h-[34vh] max-h-80 w-auto drop-shadow-[0_0_25px_rgba(125,255,87,0.4)] " />
+        <div className="origin-bottom" style={{ animation: "sway 3.5s ease-in-out infinite" }}>
+          <StreakLogo className="hero-logo h-[34vh] max-h-80 w-auto drop-shadow-[0_0_25px_rgba(125,255,87,0.4)] " />
+        </div>
       </div>
 
       {/* grass overlapping the logo base */}
@@ -155,7 +157,7 @@ function Trees() {
   return (
     <div
       className="pointer-events-none absolute left-0 right-0"
-      style={{ bottom: "28%" }}
+      style={{ bottom: "45%" }}
       aria-hidden="true"
     >
       <div className="absolute left-[8%] bottom-0">
@@ -185,31 +187,3 @@ function Tree({ h }: { h: number }) {
   );
 }
 
-function GrassLine() {
-  // A row of swaying blades sitting on the surface in front of the logo base.
-  const blades = Array.from({ length: 60 });
-  return (
-    <div
-      className="pointer-events-none absolute left-0 right-0 flex items-end justify-center gap-0.5 overflow-hidden"
-      style={{ bottom: "26%", height: 70 }}
-      aria-hidden="true"
-    >
-      {blades.map((_, i) => {
-        const hgt = 28 + ((i * 13) % 34);
-        return (
-          <span
-            key={i}
-            className="grass-blade block origin-bottom rounded-t-full"
-            style={{
-              width: 4,
-              height: hgt,
-              background: `linear-gradient(180deg, #5aa033, var(--grass))`,
-              animation: `sway ${2.6 + (i % 5) * 0.3}s ease-in-out ${(i % 7) * 0.12
-                }s infinite`,
-            }}
-          />
-        );
-      })}
-    </div>
-  );
-}

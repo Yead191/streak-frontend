@@ -49,7 +49,7 @@ export default function Grass({
             className="grass-blade"
             style={{
               position: "absolute",
-              bottom: "12%",
+              bottom: "31%",
               left: `${left}%`,
               width: w,
               height: h,
