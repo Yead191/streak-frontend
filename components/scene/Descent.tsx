@@ -89,7 +89,7 @@ export default function Descent() {
       aria-label="Underground — the mycelium network"
     >
       {/* sticky viewport-sized canvas */}
-      <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
+      <div className="sticky top-0 h-svh w-full overflow-hidden">
         <MyceliumRoots className="absolute inset-0 h-full w-full" />
 
         {NODES.map((n, i) => (

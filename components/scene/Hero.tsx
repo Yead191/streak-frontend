@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import StreakLogo from "@/components/graphics/StreakLogo";
+import Grass from "../graphics/Grass";
 
 const CLOUDS = [
   { top: "14%", scale: 1, dur: 60, delay: 0, opacity: 0.8 },
@@ -40,7 +41,7 @@ export default function Hero() {
   return (
     <section
       ref={root}
-      className="relative h-[100svh] w-full overflow-hidden"
+      className="relative h-svh w-full overflow-hidden"
       style={{
         background:
           "linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 58%, var(--grass) 70%, var(--soil-top) 100%)",
@@ -92,7 +93,7 @@ export default function Hero() {
       <Trees />
 
       {/* the logo, sitting on the surface */}
-      <div className="logo-bob absolute bottom-[14%] left-1/2 -translate-x-1/2">
+      <div className="logo-bob absolute bottom-[8%] left-1/2 -translate-x-1/2 z-10">
         <div
           className="logo-halo absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
@@ -103,11 +104,11 @@ export default function Hero() {
             animation: "halo 3.2s ease-in-out infinite",
           }}
         />
-        <StreakLogo className="hero-logo h-[34vh] max-h-[320px] w-auto drop-shadow-[0_0_25px_rgba(125,255,87,0.4)]" />
+        <StreakLogo className="hero-logo h-[34vh] max-h-80 w-auto drop-shadow-[0_0_25px_rgba(125,255,87,0.4)]" />
       </div>
 
       {/* grass overlapping the logo base */}
-      <GrassLine />
+      <Grass />
 
       {/* wordless scroll cue */}
       <div className="scroll-hint absolute bottom-6 left-1/2 -translate-x-1/2">
@@ -188,7 +189,7 @@ function GrassLine() {
   const blades = Array.from({ length: 60 });
   return (
     <div
-      className="pointer-events-none absolute left-0 right-0 flex items-end justify-center gap-[2px] overflow-hidden"
+      className="pointer-events-none absolute left-0 right-0 flex items-end justify-center gap-0.5 overflow-hidden"
       style={{ bottom: "26%", height: 70 }}
       aria-hidden="true"
     >
@@ -202,9 +203,8 @@ function GrassLine() {
               width: 4,
               height: hgt,
               background: `linear-gradient(180deg, #5aa033, var(--grass))`,
-              animation: `sway ${2.6 + (i % 5) * 0.3}s ease-in-out ${
-                (i % 7) * 0.12
-              }s infinite`,
+              animation: `sway ${2.6 + (i % 5) * 0.3}s ease-in-out ${(i % 7) * 0.12
+                }s infinite`,
             }}
           />
         );
