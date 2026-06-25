@@ -19,7 +19,7 @@ export default function AudioToggle() {
       setOn(false);
     } else {
       try {
-        el.volume = 0.4;
+        el.volume = 0.06;
         await el.play();
         setOn(true);
       } catch {
@@ -36,7 +36,7 @@ export default function AudioToggle() {
         onClick={toggle}
         aria-label={on ? "Mute ambient sound" : "Play ambient sound"}
         aria-pressed={on}
-        className="fixed bottom-5 right-5 z-[70] flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-black/40 backdrop-blur transition hover:border-[var(--green)]"
+        className="fixed bottom-5 right-5 z-70 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-black/40 backdrop-blur transition hover:border-(--green)"
       >
         <svg
           width="22"
