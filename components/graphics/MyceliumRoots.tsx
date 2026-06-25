@@ -60,7 +60,7 @@ export default function MyceliumRoots({
       </defs>
 
       {/* soft glow layer — always fully rendered as a faint preview */}
-      <g filter="url(#rootGlow)" opacity="0.4">
+      <g filter="url(#rootGlow)" opacity="0.4" style={{ transform: "translateZ(0)", willChange: "transform" }}>
         {ROOTS.map((r, i) => (
           <path
             key={`g-${i}`}
@@ -84,6 +84,7 @@ export default function MyceliumRoots({
             stroke={stroke(r.color)}
             strokeWidth={r.w}
             strokeLinecap="round"
+            style={{ willChange: "stroke-dashoffset, opacity" }}
           />
         ))}
       </g>

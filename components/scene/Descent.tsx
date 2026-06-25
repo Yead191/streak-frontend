@@ -67,7 +67,7 @@ export default function Descent() {
       // A continuous energy pulse along the network, independent of scroll.
       // Targets only the crisp cores so the wide glow strokes are left for the
       // scroll-draw above (and to keep the idle animation light).
-      gsap.to(".root-core", {
+      gsap.to(".root", {
         opacity: 0.6,
         duration: 1.4,
         ease: "sine.inOut",
@@ -99,7 +99,7 @@ export default function Descent() {
           <div
             key={i}
             className="node absolute -translate-x-1/2 -translate-y-1/2 text-center"
-            style={{ top: n.top, left: n.left }}
+            style={{ top: n.top, left: n.left, willChange: "opacity, transform" }}
           >
             <span
               className="mx-auto mb-3 block rounded-full"
@@ -110,6 +110,7 @@ export default function Descent() {
                 boxShadow:
                   "0 0 10px 3px rgba(125,255,87,0.8), 0 0 26px 8px rgba(255,122,24,0.35)",
                 animation: `halo 2.4s ease-in-out ${i * 0.3}s infinite`,
+                willChange: "opacity, transform",
               }}
             />
             <span className="font-display text-glow-green block text-lg font-semibold tracking-wide sm:text-2xl">

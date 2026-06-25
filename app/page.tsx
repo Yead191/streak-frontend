@@ -1,7 +1,9 @@
+import dynamic from "next/dynamic";
 import Hero from "@/components/scene/Hero";
-import Descent from "@/components/scene/Descent";
-import Manifesto from "@/components/scene/Manifesto";
-import ComingSoon from "@/components/scene/ComingSoon";
+
+const Descent = dynamic(() => import("@/components/scene/Descent"));
+const Manifesto = dynamic(() => import("@/components/scene/Manifesto"));
+const ComingSoon = dynamic(() => import("@/components/scene/ComingSoon"));
 
 export default function Home() {
   return (
