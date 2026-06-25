@@ -94,7 +94,7 @@ export default function Hero() {
       <Trees />
 
       {/* the logo, sitting on the surface */}
-      <div className="logo-bob absolute bottom-[8%] left-1/2 -translate-x-1/2 z-10">
+      <div className="logo-bob absolute bottom-[25%] left-1/2 -translate-x-1/2 z-10">
         <div
           className="logo-halo absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
@@ -105,14 +105,14 @@ export default function Hero() {
             animation: "halo 3.2s ease-in-out infinite",
           }}
         />
-        <StreakLogo className="hero-logo h-[34vh] max-h-80 w-auto drop-shadow-[0_0_25px_rgba(125,255,87,0.4)]" />
+        <StreakLogo className="hero-logo h-[34vh] max-h-80 w-auto drop-shadow-[0_0_25px_rgba(125,255,87,0.4)] " />
       </div>
 
       {/* grass overlapping the logo base */}
       <Grass />
 
       {/* wordless scroll cue */}
-      <div className="scroll-hint absolute bottom-6 left-1/2 -translate-x-1/2">
+      <div className="scroll-hint absolute bottom-10 left-1/2 -translate-x-1/2">
         <svg
           width="26"
           height="40"

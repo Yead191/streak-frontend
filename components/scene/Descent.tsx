@@ -65,7 +65,9 @@ export default function Descent() {
       );
 
       // A continuous energy pulse along the network, independent of scroll.
-      gsap.to(".root", {
+      // Targets only the crisp cores so the wide glow strokes are left for the
+      // scroll-draw above (and to keep the idle animation light).
+      gsap.to(".root-core", {
         opacity: 0.6,
         duration: 1.4,
         ease: "sine.inOut",
@@ -88,8 +90,9 @@ export default function Descent() {
       }}
       aria-label="Underground — the mycelium network"
     >
-      {/* sticky viewport-sized canvas */}
-      <div className="sticky top-0 h-svh w-full overflow-hidden">
+      {/* sticky viewport-sized canvas — overflow left visible so the root
+          strands and their glow bleed past the edges instead of being clipped */}
+      <div className="sticky top-0 h-svh w-full">
         <MyceliumRoots className="absolute inset-0 h-full w-full" />
 
         {NODES.map((n, i) => (

@@ -50,6 +50,7 @@ export default function MyceliumRoots({
       preserveAspectRatio="xMidYMid slice"
       className={className}
       aria-hidden="true"
+      style={{ overflow: "visible" }}
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
