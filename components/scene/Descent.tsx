@@ -86,7 +86,8 @@ export default function Descent() {
       style={{
         height: "340vh",
         background:
-          "linear-gradient(180deg, var(--soil-top) 0%, var(--soil-bottom) 100%)",
+          // "linear-gradient(180deg, var(--soil-top) 0%, var(--soil-bottom) 100%)",
+          "black"
       }}
       aria-label="Underground — the mycelium network"
     >

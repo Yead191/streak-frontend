@@ -9,9 +9,9 @@ import StreakLogo from "@/components/graphics/StreakLogo";
 
 const CLOUDS = [
   { src: "/assets/cloud/cloud1.png", top: "12%", width: 260, dur: 140, delay: 0, opacity: 0.9 },
-  { src: "/assets/cloud/cloud2.png", top: "24%", width: 190, dur: 180, delay: -60, opacity: 0.7 },
+  { src: "/assets/cloud/cloud2.png", top: "16%", width: 190, dur: 180, delay: -60, opacity: 0.7 },
   { src: "/assets/cloud/cloud3.png", top: "8%", width: 150, dur: 210, delay: -120, opacity: 0.6 },
-  { src: "/assets/cloud/cloud4.png", top: "20%", width: 220, dur: 165, delay: -90, opacity: 0.5 },
+  { src: "/assets/cloud/cloud4.png", top: "10%", width: 220, dur: 165, delay: -90, opacity: 0.5 },
 ];
 
 export default function Hero() {
@@ -47,7 +47,7 @@ export default function Hero() {
         // background:
         //   "linear-gradient(180deg, var(--sky-top) 10%, var(--sky-bottom) 41%, var(--grass) 53%, var(--soil-top) 100%)",
         background:
-          "linear-gradient(180deg, var(--sky-top) 10%, var(--sky-bottom) 41%, var(--grass) 50%, var(--soil-top) 100%)"
+          "linear-gradient(180deg, var(--sky-top) 10%, var(--sky-bottom) 41%, var(--soil-top) 100%)"
       }}
       aria-label="Streak — surface"
     >
@@ -93,7 +93,7 @@ export default function Hero() {
       </p>
 
       {/* the logo, sitting on the surface */}
-      <div className="logo-bob absolute bottom-[25%] left-1/2 -translate-x-1/2 z-10">
+      <div className="logo-bob absolute bottom-[28%] left-1/2 -translate-x-1/2 z-10">
         <div
           className="logo-halo absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
@@ -105,7 +105,7 @@ export default function Hero() {
           }}
         />
         <div className="origin-bottom" style={{ animation: "sway 3.5s ease-in-out infinite" }}>
-          <StreakLogo className="hero-logo h-[34vh] max-h-80 w-auto drop-shadow-[0_0_25px_rgba(125,255,87,0.4)] " />
+          <StreakLogo className="hero-logo h-[55vh] lg:max-h-110 w-auto drop-shadow-[0_0_25px_rgba(125,255,87,0.4)] " />
         </div>
       </div>
 
@@ -113,19 +113,19 @@ export default function Hero() {
           to the bottom, so the Descent section's root lines read above it */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[52vh] w-full"
-        style={{
-          maskImage: "linear-gradient(to bottom, transparent 0%, #000 14%)",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 14%)",
-        }}
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[80vh] w-full"
+      // style={{
+      //   maskImage: "linear-gradient(to bottom, transparent 0%, #000 14%)",
+      //   WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 14%)",
+      // }}
       >
         <Image
-          src="/assets/hero/grass-bg.png"
+          src="/assets/hero/grass-bg3.png"
           alt=""
           fill
           priority
           sizes="100vw"
-          className="select-none object-cover object-bottom"
+          className="select-none object-cover object-top"
         />
       </div>
 
