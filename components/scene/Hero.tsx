@@ -7,11 +7,14 @@ import { gsap } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import StreakLogo from "@/components/graphics/StreakLogo";
 
+// Slow, calm drift — but still perceptible so the loop reads as alive. Each
+// cloud sits at a distinct height and starts at a distinct point along its path
+// (negative delays), and one drifts the opposite way (reverse) from the right.
 const CLOUDS = [
-  { src: "/assets/cloud/cloud1.png", top: "12%", width: 260, dur: 140, delay: 0, opacity: 0.9 },
-  { src: "/assets/cloud/cloud2.png", top: "16%", width: 190, dur: 180, delay: -60, opacity: 0.7 },
-  { src: "/assets/cloud/cloud3.png", top: "8%", width: 150, dur: 210, delay: -120, opacity: 0.6 },
-  { src: "/assets/cloud/cloud4.png", top: "10%", width: 220, dur: 165, delay: -90, opacity: 0.5 },
+  { src: "/assets/cloud/cloud1.png", top: "8%", width: 260, dur: 350, delay: -35, opacity: 0.9, reverse: false },
+  { src: "/assets/cloud/cloud2.png", top: "6%", width: 190, dur: 290, delay: -57, opacity: 0.7, reverse: false },
+  { src: "/assets/cloud/cloud3.png", top: "5%", width: 150, dur: 370, delay: -79, opacity: 0.6, reverse: false },
+  { src: "/assets/cloud/cloud4.png", top: "2%", width: 220, dur: 230, delay: -74, opacity: 0.5, reverse: false },
 ];
 
 export default function Hero() {
@@ -82,6 +85,7 @@ export default function Hero() {
               width: c.width,
               opacity: c.opacity,
               animation: `drift ${c.dur}s linear ${c.delay}s infinite`,
+              animationDirection: c.reverse ? "reverse" : "normal",
             }}
           />
         ))}
@@ -104,8 +108,10 @@ export default function Hero() {
             animation: "halo 3.2s ease-in-out infinite",
           }}
         />
-        <div className="origin-bottom" style={{ animation: "sway 3.5s ease-in-out infinite" }}>
-          <StreakLogo className="hero-logo h-[55vh] lg:max-h-110 w-auto drop-shadow-[0_0_25px_rgba(125,255,87,0.4)] " />
+        <div className="origin-bottom"
+        // style={{ animation: "sway 3.5s ease-in-out infinite" }}
+        >
+          <StreakLogo className="hero-logo h-[50vh] lg:max-h-84 w-auto" />
         </div>
       </div>
 
@@ -163,7 +169,7 @@ export default function Hero() {
 // Glowing fireflies hovering over the grass. Positions/timings are derived
 // deterministically from the index so server and client render identically.
 function Fireflies() {
-  const count = 22;
+  const count = 16;
   return (
     <div
       className="pointer-events-none absolute inset-0 z-2"
@@ -171,10 +177,10 @@ function Fireflies() {
     >
       {Array.from({ length: count }).map((_, i) => {
         const left = (i * 61) % 100;
-        const bottom = 24 + ((i * 37) % 24); // 24%–48% — over the grass band
-        const size = 2 + (i % 3); // 2–4px
-        const dur = 5 + ((i * 13) % 7); // 5–11s float cycle
-        const delay = -((i * 0.9) % 8); // staggered, already mid-flight
+        const bottom = 30 + ((i * 37) % 34); // 20%–54% — over the grass band
+        const size = 4 + (i % 4) * 1.5; // 4–8.5px
+        const dur = 4 + ((i * 13) % 6); // 4–10s float cycle
+        const delay = -((i * 0.7) % 9); // staggered, already mid-flight
         return (
           <span
             key={i}
@@ -185,8 +191,9 @@ function Fireflies() {
               width: size,
               height: size,
               background:
-                "radial-gradient(circle, #fff6b0 0%, #ffdf4d 45%, rgba(255,200,40,0) 72%)",
-              boxShadow: "0 0 7px 2px rgba(255,224,77,0.75)",
+                "radial-gradient(circle, #ffffff 0%, #fff39a 35%, #ffd23d 60%, rgba(255,190,40,0) 78%)",
+              boxShadow:
+                "0 0 8px 2px rgba(255,224,77,0.95), 0 0 18px 6px rgba(255,180,40,0.55)",
               animation: `firefly ${dur}s ease-in-out ${delay}s infinite`,
             }}
           />

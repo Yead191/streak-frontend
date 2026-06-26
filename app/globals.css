@@ -27,7 +27,8 @@
 }
 
 html {
-  scroll-behavior: auto; /* Lenis handles smoothing; avoid double-smoothing */
+  scroll-behavior: auto;
+  /* Lenis handles smoothing; avoid double-smoothing */
 }
 
 body {
@@ -46,11 +47,9 @@ body {
   inset: 0;
   pointer-events: none;
   z-index: 60;
-  background: radial-gradient(
-    120% 80% at 50% 0%,
-    transparent 55%,
-    rgba(0, 0, 0, 0.55) 100%
-  );
+  background: radial-gradient(120% 80% at 50% 0%,
+      transparent 55%,
+      rgba(0, 0, 0, 0.55) 100%);
   mix-blend-mode: multiply;
 }
 
@@ -66,6 +65,7 @@ body {
     0 0 8px rgba(70, 227, 122, 0.55),
     0 0 22px rgba(70, 227, 122, 0.35);
 }
+
 .text-glow-orange {
   color: var(--white);
   text-shadow:
@@ -75,10 +75,12 @@ body {
 
 /* Grass blades sway ------------------------------------------------ */
 @keyframes sway {
+
   0%,
   100% {
     transform: rotate(-2.5deg);
   }
+
   50% {
     transform: rotate(2.5deg);
   }
@@ -89,41 +91,71 @@ body {
   from {
     transform: translateX(-25vw);
   }
+
   to {
     transform: translateX(125vw);
   }
 }
 
-/* Glowing fireflies — gentle drift while pulsing in and out --------- */
+/* Glowing fireflies — gentle drift while twinkling in and out ------- */
 @keyframes firefly {
+
   0%,
   100% {
-    transform: translate(0, 0);
+    transform: translate(0, 0) scale(0.5);
     opacity: 0;
   }
-  15% {
+
+  18% {
     opacity: 1;
   }
+
   50% {
-    transform: translate(18px, -22px);
-    opacity: 0.85;
+    transform: translate(22px, -26px) scale(1.15);
+    opacity: 1;
   }
-  75% {
-    opacity: 0.35;
+
+  78% {
+    opacity: 0.55;
   }
-  90% {
-    transform: translate(-6px, -32px);
+
+  92% {
+    transform: translate(-10px, -42px) scale(0.7);
     opacity: 0;
   }
 }
 
+/* Premium, animated 3D glow + lift shadow under the hero logo ------- */
+.hero-logo {
+  /* filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 0 22px rgba(125, 255, 87, 0.4)); */
+  animation: logoGlow 3.6s ease-in-out infinite;
+  will-change: filter;
+}
+
+/* @keyframes logoGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.5))
+      drop-shadow(0 0 16px rgba(125, 255, 87, 0.3))
+      drop-shadow(0 0 34px rgba(255, 122, 24, 0));
+  }
+  50% {
+    filter: drop-shadow(0 24px 36px rgba(0, 0, 0, 0.6))
+      drop-shadow(0 0 44px rgba(125, 255, 87, 0.8))
+      drop-shadow(0 0 80px rgba(255, 122, 24, 0.45));
+  }
+} */
+
 /* Slow pulse for the logo halo ------------------------------------- */
 @keyframes halo {
+
   0%,
   100% {
     opacity: 0.35;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.7;
     transform: scale(1.12);
@@ -132,10 +164,12 @@ body {
 
 /* Bob the logo gently like a mushroom in a breeze ------------------ */
 @keyframes bob {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-6px);
   }
@@ -147,9 +181,11 @@ body {
     opacity: 0;
     transform: translateY(0);
   }
+
   40% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
     transform: translateY(14px);
@@ -157,10 +193,13 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .grass-blade,
   .cloud,
   .logo-halo,
   .logo-bob,
+  .hero-logo,
+  .firefly,
   .scroll-hint {
     animation: none !important;
   }
