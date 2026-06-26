@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import StreakLogo from "@/components/graphics/StreakLogo";
-import Grass from "../graphics/Grass";
 
 const CLOUDS = [
   { src: "/assets/cloud/cloud1.png", top: "12%", width: 260, dur: 140, delay: 0, opacity: 0.9 },
@@ -92,9 +92,6 @@ export default function Hero() {
         Rooted in community
       </p>
 
-      {/* trees on the grass line */}
-      <Trees />
-
       {/* the logo, sitting on the surface */}
       <div className="logo-bob absolute bottom-[25%] left-1/2 -translate-x-1/2 z-10">
         <div
@@ -112,11 +109,31 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* grass overlapping the logo base */}
-      <Grass />
+      {/* photographic grass & soil ground — a background layer (z-0) anchored
+          to the bottom, so the Descent section's root lines read above it */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[52vh] w-full"
+        style={{
+          maskImage: "linear-gradient(to bottom, transparent 0%, #000 14%)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 14%)",
+        }}
+      >
+        <Image
+          src="/assets/hero/grass-bg.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="select-none object-cover object-bottom"
+        />
+      </div>
+
+      {/* glowing fireflies drifting over the grass */}
+      <Fireflies />
 
       {/* wordless scroll cue */}
-      <div className="scroll-hint absolute bottom-10 left-1/2 -translate-x-1/2">
+      <div className="scroll-hint absolute bottom-10 left-1/2 z-10 -translate-x-1/2">
         <svg
           width="26"
           height="40"
@@ -143,37 +160,39 @@ export default function Hero() {
   );
 }
 
-function Trees() {
+// Glowing fireflies hovering over the grass. Positions/timings are derived
+// deterministically from the index so server and client render identically.
+function Fireflies() {
+  const count = 22;
   return (
     <div
-      className="pointer-events-none absolute left-0 right-0"
-      style={{ bottom: "45%" }}
+      className="pointer-events-none absolute inset-0 z-2"
       aria-hidden="true"
     >
-      <div className="absolute left-[8%] bottom-0">
-        <Tree h={120} />
-      </div>
-      <div className="absolute left-[20%] bottom-0 opacity-80">
-        <Tree h={84} />
-      </div>
-      <div className="absolute right-[10%] bottom-0">
-        <Tree h={104} />
-      </div>
-      <div className="absolute right-[24%] bottom-0 opacity-80">
-        <Tree h={72} />
-      </div>
+      {Array.from({ length: count }).map((_, i) => {
+        const left = (i * 61) % 100;
+        const bottom = 24 + ((i * 37) % 24); // 24%–48% — over the grass band
+        const size = 2 + (i % 3); // 2–4px
+        const dur = 5 + ((i * 13) % 7); // 5–11s float cycle
+        const delay = -((i * 0.9) % 8); // staggered, already mid-flight
+        return (
+          <span
+            key={i}
+            className="firefly absolute rounded-full"
+            style={{
+              left: `${left}%`,
+              bottom: `${bottom}%`,
+              width: size,
+              height: size,
+              background:
+                "radial-gradient(circle, #fff6b0 0%, #ffdf4d 45%, rgba(255,200,40,0) 72%)",
+              boxShadow: "0 0 7px 2px rgba(255,224,77,0.75)",
+              animation: `firefly ${dur}s ease-in-out ${delay}s infinite`,
+            }}
+          />
+        );
+      })}
     </div>
-  );
-}
-
-function Tree({ h }: { h: number }) {
-  return (
-    <svg width={h * 0.7} height={h} viewBox="0 0 70 100" aria-hidden="true">
-      <rect x="31" y="62" width="8" height="38" fill="#2e1c10" />
-      <circle cx="35" cy="40" r="28" fill="#1f4a1a" />
-      <circle cx="20" cy="52" r="18" fill="#24551f" />
-      <circle cx="52" cy="50" r="16" fill="#1c421a" />
-    </svg>
   );
 }
 

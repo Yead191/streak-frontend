@@ -94,6 +94,29 @@ body {
   }
 }
 
+/* Glowing fireflies — gentle drift while pulsing in and out --------- */
+@keyframes firefly {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(18px, -22px);
+    opacity: 0.85;
+  }
+  75% {
+    opacity: 0.35;
+  }
+  90% {
+    transform: translate(-6px, -32px);
+    opacity: 0;
+  }
+}
+
 /* Slow pulse for the logo halo ------------------------------------- */
 @keyframes halo {
   0%,
