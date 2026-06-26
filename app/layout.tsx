@@ -13,6 +13,10 @@ export const metadata: Metadata = {
       "A new live-events platform embodying the meaning of connection.",
     type: "website",
   },
+  icons: {
+    icon: "/favicon.ico"
+  }
+
 };
 
 export const viewport: Viewport = {

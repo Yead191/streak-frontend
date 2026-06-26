@@ -8,9 +8,10 @@ import StreakLogo from "@/components/graphics/StreakLogo";
 import Grass from "../graphics/Grass";
 
 const CLOUDS = [
-  { top: "14%", left: "10%", scale: 1, dur: 60, delay: 0, opacity: 0.8 },
-  { top: "26%", right: "10%", scale: 0.7, dur: 80, delay: -30, opacity: 0.6 },
-  { top: "9%", left: "45%", scale: 0.5, dur: 95, delay: -55, opacity: 0.5 },
+  { src: "/assets/cloud/cloud1.png", top: "12%", width: 260, dur: 140, delay: 0, opacity: 0.9 },
+  { src: "/assets/cloud/cloud2.png", top: "24%", width: 190, dur: 180, delay: -60, opacity: 0.7 },
+  { src: "/assets/cloud/cloud3.png", top: "8%", width: 150, dur: 210, delay: -120, opacity: 0.6 },
+  { src: "/assets/cloud/cloud4.png", top: "20%", width: 220, dur: 165, delay: -90, opacity: 0.5 },
 ];
 
 export default function Hero() {
@@ -70,20 +71,19 @@ export default function Hero() {
       {/* drifting clouds */}
       <div className="pointer-events-none absolute inset-0">
         {CLOUDS.map((c, i) => (
-          <div
+          <img
             key={i}
-            className="cloud absolute"
+            src={c.src}
+            alt=""
+            aria-hidden="true"
+            className="cloud absolute left-0 top-0 max-w-none select-none"
             style={{
               top: c.top,
-              ...(c.left ? { left: c.left } : {}),
-              ...(c.right ? { right: c.right } : {}),
+              width: c.width,
               opacity: c.opacity,
-              transform: `scale(${c.scale})`,
               animation: `drift ${c.dur}s linear ${c.delay}s infinite`,
             }}
-          >
-            <Cloud />
-          </div>
+          />
         ))}
       </div>
 
@@ -140,18 +140,6 @@ export default function Hero() {
         </svg>
       </div>
     </section>
-  );
-}
-
-function Cloud() {
-  return (
-    <svg width="220" height="80" viewBox="0 0 220 80" aria-hidden="true">
-      <g fill="rgba(255,255,255,0.85)">
-        <ellipse cx="70" cy="50" rx="55" ry="26" />
-        <ellipse cx="120" cy="42" rx="45" ry="30" />
-        <ellipse cx="160" cy="52" rx="40" ry="22" />
-      </g>
-    </svg>
   );
 }
 

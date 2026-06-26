@@ -87,10 +87,10 @@ body {
 /* Drifting clouds -------------------------------------------------- */
 @keyframes drift {
   from {
-    transform: translateX(-10%);
+    transform: translateX(-25vw);
   }
   to {
-    transform: translateX(110%);
+    transform: translateX(125vw);
   }
 }
 
