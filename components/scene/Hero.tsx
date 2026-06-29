@@ -112,7 +112,7 @@ export default function Hero() {
         <div className="origin-bottom"
         // style={{ animation: "sway 3.5s ease-in-out infinite" }}
         >
-          <StreakLogo className="hero-logo lg:h-[50vh] h-fit lg:max-h-84 w-auto" />
+          <StreakLogo className="hero-logo h-[38vh] max-h-80 w-auto lg:h-[50vh] lg:max-h-84 object-contain" />
         </div>
       </div>
 

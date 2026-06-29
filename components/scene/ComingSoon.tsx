@@ -96,7 +96,7 @@ export default function ComingSoon() {
           className="blob-drift absolute left-1/2 top-1/3 h-[55vh] w-[55vh] -translate-x-1/2 rounded-full"
           style={{
             background:
-              "radial-gradient(circle, rgba(125,255,87,0.18) 0%, rgba(125,255,87,0) 70%)",
+              "radial-linear(circle, rgba(125,255,87,0.18) 0%, rgba(125,255,87,0) 70%)",
             filter: "blur(20px)",
           }}
         />
@@ -104,7 +104,7 @@ export default function ComingSoon() {
           className="blob-drift absolute right-[12%] top-[18%] h-[38vh] w-[38vh] rounded-full"
           style={{
             background:
-              "radial-gradient(circle, rgba(255,122,24,0.14) 0%, rgba(255,122,24,0) 70%)",
+              "radial-linear(circle, rgba(255,122,24,0.14) 0%, rgba(255,122,24,0) 70%)",
             filter: "blur(20px)",
             animationDelay: "-6s",
           }}
@@ -146,7 +146,7 @@ export default function ComingSoon() {
           <StreakLogo className="h-20 w-auto sm:h-24" isFooter={true} />
         </div>
 
-        <p className="end-eyebrow mb-6 text-xs uppercase tracking-[0.45em] text-[var(--green)]">
+        <p className="end-eyebrow mb-6 text-xs uppercase tracking-[0.45em] text-(--green)">
           The Streak app is here
         </p>
 
@@ -214,14 +214,14 @@ function StoreBadge({
     <a
       href={href}
       aria-label={ariaLabel}
-      className={`end-badge group relative flex w-60 items-center gap-3 overflow-hidden rounded-2xl border px-5 py-3 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 sm:w-56 ${recommended
-        ? "border-[var(--green)]/70"
+      className={`end-badge group relative flex w-60 items-center gap-3 overflow-visible rounded-2xl border px-5 py-3 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 sm:w-56 ${recommended
+        ? "border-(--green)/70"
         : "border-white/25 hover:border-white/45"
         }`}
       style={{
         background: recommended
-          ? "linear-gradient(180deg, rgba(125,255,87,0.16) 0%, rgba(125,255,87,0.06) 100%)"
-          : "linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%)",
+          ? "linear-linear(180deg, rgba(125,255,87,0.16) 0%, rgba(125,255,87,0.06) 100%)"
+          : "linear-linear(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%)",
         boxShadow: recommended
           ? "0 8px 28px rgba(0,0,0,0.45), 0 0 28px rgba(125,255,87,0.28), inset 0 1px 0 rgba(255,255,255,0.12)"
           : "0 8px 24px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12)",
@@ -230,7 +230,7 @@ function StoreBadge({
       {/* shine sweep on hover */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100"
+        className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-linear-to-r from-transparent via-white/15 to-transparent opacity-0 transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100"
       />
       <span className="shrink-0 text-white">{icon}</span>
       <span className="flex flex-col items-start leading-tight">
@@ -242,7 +242,7 @@ function StoreBadge({
         </span>
       </span>
       {recommended && (
-        <span className="absolute -top-2 right-3 rounded-full bg-[var(--green)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-black">
+        <span className="absolute -top-2 right-3 rounded-full bg-(--green) px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-black">
           For you
         </span>
       )}
