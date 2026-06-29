@@ -23,6 +23,7 @@ export default function StreakLogo({
       alt={title}
       width={1000}
       height={1000}
+      draggable={false}
       className={`${className} `}
     />
   );

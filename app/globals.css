@@ -11,9 +11,10 @@
   --green-deep: #1f8f4d;
   --orange: #ff7a18;
   --white: #f5f3ec;
-
-  --sky-top: #140a33;
-  --sky-bottom: #3a2a6b;
+  /* --sky-top: #140a33; */
+  --sky-top: #0b0620;
+  /* --sky-bottom: #3a2a6b; */
+  --sky-bottom: #281c4a;
   --grass: #3f7a23;
   --soil-top: #241a12;
   --soil-bottom: #070503;
