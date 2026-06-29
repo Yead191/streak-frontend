@@ -162,6 +162,31 @@ body {
   }
 }
 
+/* Bounce the descent scroll-cue arrow to draw the eye downward --------- */
+@keyframes descent-bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.85;
+  }
+
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+}
+
+.descent-arrow {
+  animation: descent-bounce 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .descent-arrow {
+    animation: none;
+  }
+}
+
 /* Bob the logo gently like a mushroom in a breeze ------------------ */
 @keyframes bob {
 

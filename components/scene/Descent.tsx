@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import MyceliumRoots from "@/components/graphics/MyceliumRoots";
 
@@ -16,6 +16,7 @@ const NODES = [
 
 export default function Descent() {
   const section = useRef<HTMLElement>(null);
+  const hint = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
 
   useGSAP(
@@ -30,6 +31,7 @@ export default function Descent() {
         // Show everything immediately, no scroll-linked motion.
         gsap.set(roots, { strokeDashoffset: 0 });
         gsap.set(".node", { autoAlpha: 1 });
+        gsap.set(hint.current, { autoAlpha: 1 });
         return;
       }
 
@@ -74,6 +76,29 @@ export default function Descent() {
         yoyo: true,
         repeat: -1,
         stagger: { each: 0.1, from: "random" },
+      });
+
+      // Scroll cue — fixed to the viewport, so it can show during the
+      // Hero→Descent transition. It fades in as the Hero scrolls up and this
+      // section starts entering, then fades out the moment the section pins at
+      // the top and the root-drawing animation begins. A single onToggle
+      // handles show/hide in both directions, so there's nothing to conflict.
+      // xPercent keeps it horizontally centered: GSAP owns the transform, so a
+      // Tailwind -translate-x-1/2 would be overwritten the moment y animates.
+      gsap.set(hint.current, { autoAlpha: 0, y: 16, xPercent: -50 });
+
+      ScrollTrigger.create({
+        trigger: section.current,
+        start: "top 80%", // section starts entering — Hero is scrolling away
+        // end: "top top",
+        onToggle: (self) =>
+          gsap.to(hint.current, {
+            autoAlpha: self.isActive ? 1 : 0,
+            y: self.isActive ? 0 : 12,
+            duration: 0.4,
+            ease: "power2.out",
+            overwrite: true,
+          }),
       });
     },
     { scope: section, dependencies: [reduced] }
@@ -120,10 +145,37 @@ export default function Descent() {
           </div>
         ))}
 
-        {/* a hint that there is more below */}
-        <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs lg:text-xl uppercase tracking-[0.3em] text-white animate-pulse">
-          keep digging
-        </p>
+        {/* Scroll cue — fixed to the viewport so it shows during the
+            Hero→Descent transition. Visibility is driven by GSAP (autoAlpha),
+            so it starts hidden. */}
+        <div
+          ref={hint}
+          className="invisible fixed bottom-8 left-1/2 flex flex-col items-center gap-3 rounded-full px-6 py-3"
+          style={{
+            willChange: "opacity, transform",
+            background:
+              "radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 70%)",
+          }}
+        >
+          <span className="font-display text-glow-green text-base font-semibold uppercase tracking-[0.3em] sm:text-lg lg:text-xl">
+            Keep digging
+          </span>
+          <svg
+            width="34"
+            height="34"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="var(--green)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="descent-arrow"
+            style={{ filter: "drop-shadow(0 0 10px rgba(125,255,87,0.9))" }}
+            aria-hidden="true"
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </div>
       </div>
     </section>
   );

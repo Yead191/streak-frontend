@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import StreakLogo from "@/components/graphics/StreakLogo";
+import useBreakpoint from "@/hooks/useBreakpoint";
 
 // Slow, calm drift — but still perceptible so the loop reads as alive. Each
 // cloud sits at a distinct height and starts at a distinct point along its path
@@ -97,7 +98,7 @@ export default function Hero() {
       </p>
 
       {/* the logo, sitting on the surface */}
-      <div className="logo-bob absolute bottom-[28%] left-1/2 -translate-x-1/2 z-10">
+      <div className="logo-bob absolute bottom-[10%] lg:bottom-[28%] left-1/2 -translate-x-1/2 z-10">
         <div
           className="logo-halo absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
@@ -111,7 +112,7 @@ export default function Hero() {
         <div className="origin-bottom"
         // style={{ animation: "sway 3.5s ease-in-out infinite" }}
         >
-          <StreakLogo className="hero-logo h-[50vh] lg:max-h-84 w-auto" />
+          <StreakLogo className="hero-logo lg:h-[50vh] h-fit lg:max-h-84 w-auto" />
         </div>
       </div>
 
@@ -119,7 +120,7 @@ export default function Hero() {
           to the bottom, so the Descent section's root lines read above it */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[80vh] w-full"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[25vh] lg:h-[80vh] w-full"
       // style={{
       //   maskImage: "linear-gradient(to bottom, transparent 0%, #000 14%)",
       //   WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 14%)",
@@ -166,10 +167,11 @@ export default function Hero() {
   );
 }
 
-// Glowing fireflies hovering over the grass. Positions/timings are derived
-// deterministically from the index so server and client render identically.
 function Fireflies() {
-  const count = 16;
+  const breakpoint = useBreakpoint();
+  const count = (breakpoint === "lg" || breakpoint === "xl") ? 16 : 10;
+  const baseBottom = (breakpoint === "lg" || breakpoint === "xl") ? 30 : 10;
+
   return (
     <div
       className="pointer-events-none absolute inset-0 z-2"
@@ -177,10 +179,17 @@ function Fireflies() {
     >
       {Array.from({ length: count }).map((_, i) => {
         const left = (i * 61) % 100;
-        const bottom = 30 + ((i * 37) % 34); // 20%–54% — over the grass band
+
+        // 3. Apply your dynamic logic here
+        const bottom = baseBottom + ((i * 37) % 34);
+
+        // (Alternatively, you can write it exactly as you drafted:)
+        // const bottom = breakpoint === "lg" ? 30 + ((i * 37) % 34) : 10 + ((i * 37) % 34);
+
         const size = 4 + (i % 4) * 1.5; // 4–8.5px
         const dur = 4 + ((i * 13) % 6); // 4–10s float cycle
         const delay = -((i * 0.7) % 9); // staggered, already mid-flight
+
         return (
           <span
             key={i}
@@ -202,4 +211,3 @@ function Fireflies() {
     </div>
   );
 }
-
