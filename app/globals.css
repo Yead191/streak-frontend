@@ -27,6 +27,13 @@
   box-sizing: border-box;
 }
 
+/* Once per session: the inline <head> script in layout.tsx adds the
+   `preloaded` class to <html> before first paint when the session flag is
+   already set, so the entry preloader never flashes on reloads. */
+html.preloaded .js-preloader {
+  display: none !important;
+}
+
 html {
   scroll-behavior: auto;
   /* Lenis handles smoothing; avoid double-smoothing */

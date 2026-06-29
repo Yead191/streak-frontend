@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import AudioToggle from "@/components/ui/AudioToggle";
+import Preloader from "@/components/ui/Preloader";
 
 export const metadata: Metadata = {
   title: "Streak — rooted in community",
@@ -31,6 +32,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Runs before first paint: if the entry preloader has already played
+            this session, hide it via CSS immediately so it never flashes on
+            reloads. Pairs with `.js-preloader` in globals.css. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(sessionStorage.getItem('streak:preloaded'))document.documentElement.classList.add('preloaded')}catch(e){}`,
+          }}
+        />
         {/* Fonts loaded via <link> rather than next/font so the build never
             blocks on a network fetch. Swap for next/font/google if you prefer. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -45,6 +54,7 @@ export default function RootLayout({
         />
       </head>
       <body className="atmosphere">
+        <Preloader />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
         <AudioToggle />
       </body>
