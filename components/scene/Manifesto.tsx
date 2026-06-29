@@ -44,7 +44,7 @@ export default function Manifesto() {
   return (
     <section
       ref={section}
-      className="relative flex min-h-[120vh] w-full flex-col items-center justify-center px-6 py-32"
+      className="relative flex min-h-[80vh] w-full flex-col items-center justify-center px-6 py-32"
       style={{
         background: "var(--soil-bottom)",
       }}

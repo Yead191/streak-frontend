@@ -10,14 +10,16 @@ export default function StreakLogo({
   className = "",
   title = "Streak",
   color = "var(--green)",
+  isFooter
 }: {
   className?: string;
   title?: string;
   color?: string;
+  isFooter?: boolean;
 }) {
   return (
     <Image
-      src={'/assets/hero/logo2.png'}
+      src={isFooter ? '/streak-logo.svg' : '/assets/hero/logo2.png'}
       alt={title}
       width={1000}
       height={1000}
