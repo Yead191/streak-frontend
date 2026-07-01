@@ -93,7 +93,7 @@ export default function Hero() {
       </div>
 
       {/* slogan, whispered at the very top */}
-      <p className="font-display absolute left-1/2 top-[7%] -translate-x-1/2 text-center text-sm tracking-[0.35em] text-white/55 uppercase">
+      <p className="font-display absolute left-1/2 top-[7%] -translate-x-1/2 text-center text-sm tracking-[0.35em] text-white/55 uppercase text-nowrap">
         Rooted in community
       </p>
 
