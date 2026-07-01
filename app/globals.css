@@ -25,6 +25,22 @@
 
 * {
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--green) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--green);
+  border-radius: 10px;
 }
 
 /* Once per session: the inline <head> script in layout.tsx adds the
@@ -37,6 +53,7 @@ html.preloaded .js-preloader {
 html {
   scroll-behavior: auto;
   /* Lenis handles smoothing; avoid double-smoothing */
+  scrollbar-gutter: stable;
 }
 
 body {

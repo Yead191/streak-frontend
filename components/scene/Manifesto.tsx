@@ -44,9 +44,9 @@ export default function Manifesto() {
   return (
     <section
       ref={section}
-      className="relative flex min-h-[80vh] w-full flex-col items-center justify-center px-6 py-32"
+      className="relative flex lg:min-h-[80vh] w-full flex-col items-center justify-center px-6 py-16 lg:py-32 lg:pt-52"
       style={{
-        background: "var(--soil-bottom)",
+        // background: "var(--soil-bottom)",
       }}
       aria-label="Welcome to Streak"
     >

@@ -57,7 +57,7 @@ export default function Preloader() {
       const exit = () => {
         gsap.to(el, {
           opacity: 0,
-          duration: 0.8,
+          duration: 1.4,
           ease: "power2.inOut",
           onComplete: () => {
             unlock();

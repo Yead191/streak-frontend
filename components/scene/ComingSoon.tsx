@@ -86,7 +86,7 @@ export default function ComingSoon() {
   return (
     <section
       ref={section}
-      className="relative flex min-h-svh w-full flex-col items-center justify-center overflow-hidden px-6 py-28  text-center"
+      className="relative flex  w-full flex-col items-center justify-center overflow-hidden px-6 py-16  text-center"
       style={{ background: "var(--soil-bottom)" }}
       aria-label="Download Streak"
     >

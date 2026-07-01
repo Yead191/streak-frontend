@@ -19,7 +19,7 @@ export default function AudioToggle() {
       setOn(false);
     } else {
       try {
-        el.volume = 0.06;
+        el.volume = 0.36;
         await el.play();
         setOn(true);
       } catch {
