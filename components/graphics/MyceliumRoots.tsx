@@ -35,6 +35,10 @@ const ROOTS: { d: string; color: "green" | "orange"; w: number }[] = [
   { d: "M600 0 C 600 240 600 520 600 840", color: "green", w: 1.6 },
   { d: "M360 360 C 300 460 320 560 260 660", color: "green", w: 1.4 },
   { d: "M860 360 C 920 460 900 560 960 660", color: "orange", w: 1.4 },
+  { d: "M600 0 C 480 120 280 180 180 340 C 100 480 200 640 120 820", color: "green", w: 2.5 },
+  { d: "M600 0 C 720 120 920 180 1020 340 C 1100 480 1000 640 1080 820", color: "orange", w: 2.5 },
+  { d: "M600 0 C 520 160 400 320 460 480 C 500 620 420 760 400 900", color: "green", w: 2 },
+  { d: "M600 0 C 680 160 800 320 740 480 C 700 620 780 760 800 900", color: "orange", w: 2 },
 ];
 
 const stroke = (c: "green" | "orange") =>
