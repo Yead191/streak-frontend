@@ -1,23 +1,27 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import MyceliumRoots from "@/components/graphics/MyceliumRoots";
+import useBreakpoint from "@/hooks/useBreakpoint";
 
 const NODES = [
-  { text: "Rooted in community", top: "20%", left: "50%" },
-  { text: "Connect community", top: "34%", left: "26%" },
-  { text: "Live events", top: "44%", left: "74%" },
-  { text: "Exclusive rewards", top: "62%", left: "30%" },
-  { text: "Endless possibilities", top: "72%", left: "70%" },
+  { text: "Rooted in community", top: "20%", leftBase: "50%", leftLg: "50%", img: "/assets/nodes/rooted.png" },
+  { text: "Connect community", top: "34%", leftBase: "26%", leftLg: "28%", img: "/assets/nodes/connect.png" },
+  { text: "Live events", top: "44%", leftBase: "74%", leftLg: "74%", img: "/assets/nodes/live.png" },
+  { text: "Exclusive rewards", top: "65%", leftBase: "30%", leftLg: "13%", img: "/assets/nodes/rewards.png" },
+  { text: "Endless possibilities", top: "75%", leftBase: "70%", leftLg: "87%", img: "/assets/nodes/possibilities.png" },
 ];
 
 export default function Descent() {
   const section = useRef<HTMLElement>(null);
   const hint = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
+  const breakpoint = useBreakpoint();
+  const isLg = breakpoint === "lg" || breakpoint === "xl" || breakpoint === "2xl";
 
   useGSAP(
     () => {
@@ -121,29 +125,31 @@ export default function Descent() {
       <div className="sticky top-0 h-svh w-full">
         <MyceliumRoots className="absolute inset-0 h-full w-full" />
 
-        {NODES.map((n, i) => (
-          <div
-            key={i}
-            className="node absolute -translate-x-1/2 -translate-y-1/2 text-center"
-            style={{ top: n.top, left: n.left, willChange: "opacity, transform" }}
-          >
-            <span
-              className="mx-auto mb-3 block rounded-full"
-              style={{
-                width: 14,
-                height: 14,
-                background: "var(--green)",
-                boxShadow:
-                  "0 0 10px 3px rgba(125,255,87,0.8), 0 0 26px 8px rgba(255,122,24,0.35)",
-                animation: `halo 2.4s ease-in-out ${i * 0.3}s infinite`,
-                willChange: "opacity, transform",
-              }}
-            />
-            <span className="font-display text-glow-green block text-lg font-semibold tracking-wide sm:text-2xl">
-              {n.text}
-            </span>
-          </div>
-        ))}
+        {NODES.map((n, i) => {
+          const left = isLg ? n.leftLg : n.leftBase;
+          return (
+            <div
+              key={i}
+              className="node absolute -translate-x-1/2 -translate-y-1/2 text-center"
+              style={{ top: n.top, left: left, willChange: "opacity, transform" }}
+            >
+              <div
+                className="mx-auto mb-3 relative rounded-full overflow-hidden w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28"
+                style={{
+                  boxShadow:
+                    "0 0 10px 3px rgba(125,255,87,0.8), 0 0 26px 8px rgba(255,122,24,0.35)",
+                  animation: `halo 2.4s ease-in-out ${i * 0.3}s infinite`,
+                  willChange: "opacity, transform",
+                }}
+              >
+                <Image src={n.img} alt="" fill sizes="112px" className="object-cover" />
+              </div>
+              <span className="font-display text-glow-green block text-lg font-semibold tracking-wide sm:text-2xl">
+                {n.text}
+              </span>
+            </div>
+          );
+        })}
 
         {/* Scroll cue — fixed to the viewport so it shows during the
             Hero→Descent transition. Visibility is driven by GSAP (autoAlpha),
