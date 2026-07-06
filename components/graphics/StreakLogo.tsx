@@ -19,7 +19,8 @@ export default function StreakLogo({
 }) {
   return (
     <Image
-      src={isFooter ? '/streak-logo.svg' : '/assets/hero/logo2.png'}
+      // src={isFooter ? '/streak-logo.svg' : '/assets/hero/logo2.png'}
+      src={'/streak-logo.svg'}
       alt={title}
       width={1000}
       height={1000}

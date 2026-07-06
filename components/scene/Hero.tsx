@@ -98,7 +98,7 @@ export default function Hero() {
       </p>
 
       {/* the logo, sitting on the surface */}
-      <div className="logo-bob absolute bottom-[8%] lg:bottom-[28%] left-1/2 -translate-x-1/2 z-10">
+      <div className="logo-bob absolute bottom-[8%] lg:bottom-[28%] left-[49%] -translate-x-1/2 z-10">
         <div
           className="logo-halo absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
