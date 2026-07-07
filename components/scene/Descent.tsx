@@ -52,7 +52,7 @@ export default function Descent() {
       tl.to(roots, {
         strokeDashoffset: 0,
         ease: "none",
-        stagger: 0.05,
+        stagger: 0.09,
         duration: 1,
       });
 
@@ -75,7 +75,7 @@ export default function Descent() {
       // scroll-draw above (and to keep the idle animation light).
       gsap.to(".root", {
         opacity: 0.6,
-        duration: 1.4,
+        duration: 2.4,
         ease: "sine.inOut",
         yoyo: true,
         repeat: -1,

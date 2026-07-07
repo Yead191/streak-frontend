@@ -28,8 +28,8 @@ export default function SmoothScrollProvider({
     }
 
     const lenis = new Lenis({
-      lerp: 0.04, // Lower lerp means much longer, smoother momentum tail
-      wheelMultiplier: 0.6, // Lower multiplier means slower scroll speed per wheel tick
+      lerp: 0.06, // Lower lerp means much longer, smoother momentum tail
+      wheelMultiplier: 0.8, // Lower multiplier means slower scroll speed per wheel tick
       smoothWheel: true,
       // Touch smoothing is opt-in; it can feel laggy on iOS, so keep it light.
       syncTouch: false,

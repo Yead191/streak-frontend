@@ -98,7 +98,7 @@ export default function Hero() {
       </p>
 
       {/* the logo, sitting on the surface */}
-      <div className="logo-bob absolute bottom-[0%] lg:bottom-[28%] left-[49%] -translate-x-1/2 z-10">
+      <div className="logo-bob absolute bottom-[0%] md:bottom-[38%] lg:bottom-[28%] left-[49%] -translate-x-1/2 z-10">
         <div
           className="logo-halo absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
@@ -112,7 +112,7 @@ export default function Hero() {
         <div className="origin-bottom"
         // style={{ animation: "sway 3.5s ease-in-out infinite" }}
         >
-          <StreakLogo className="hero-logo h-[34vh] max-h-80 w-auto lg:h-[50vh] lg:max-h-84 object-contain" />
+          <StreakLogo className="hero-logo h-[34vh] max-h-80 w-auto lg:h-[40vh] 2xl:h-[50vh] lg:max-h-84 object-contain" />
         </div>
       </div>
 
@@ -120,7 +120,7 @@ export default function Hero() {
           to the bottom, so the Descent section's root lines read above it */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[20vh] lg:h-[80vh] w-full"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[20vh] md:h-[90vh] lg:h-[80vh] w-full"
       // style={{
       //   maskImage: "linear-gradient(to bottom, transparent 0%, #000 14%)",
       //   WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 14%)",
