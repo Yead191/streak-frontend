@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
@@ -8,13 +8,16 @@ import { useReducedMotion } from "@/lib/useReducedMotion";
 import MyceliumRoots from "@/components/graphics/MyceliumRoots";
 import useBreakpoint from "@/hooks/useBreakpoint";
 
-const NODES = [
-  { text: "Rooted in community", top: "20%", leftBase: "50%", leftLg: "50%", img: "/assets/nodes/rooted.png" },
-  { text: "Connect community", top: "34%", leftBase: "26%", leftLg: "28%", img: "/assets/nodes/connect.png" },
-  { text: "Live events", top: "44%", leftBase: "74%", leftLg: "74%", img: "/assets/nodes/live.png" },
-  { text: "Exclusive rewards", top: "65%", leftBase: "30%", leftLg: "13%", img: "/assets/nodes/rewards.png" },
-  { text: "Endless possibilities", top: "75%", leftBase: "70%", leftLg: "87%", img: "/assets/nodes/possibilities.png" },
-];
+type NodeType = {
+  text: string;
+  desc: string;
+  top: string;
+  leftBase: string;
+  leftLg: string;
+  img: string;
+  side: "top" | "bottom" | "left" | "right";
+};
+
 
 export default function Descent() {
   const section = useRef<HTMLElement>(null);
@@ -22,6 +25,41 @@ export default function Descent() {
   const reduced = useReducedMotion();
   const breakpoint = useBreakpoint();
   const isLg = breakpoint === "lg" || breakpoint === "xl" || breakpoint === "2xl";
+
+
+  const NODES: NodeType[] = [
+    {
+      text: "Rooted in Community",
+      desc: "Streak's foundation stems from the unity that is created collectively.",
+      top: "20%", leftBase: "50%", leftLg: "50%", img: "/assets/nodes/rooted.png",
+      side: "bottom"
+    },
+    {
+      text: "Connect Globally",
+      desc: "Connect to worldwide businesses and unlock unique points and rewards from purchasing tickets to live events.",
+      top: isLg ? "34%" : "44%", leftBase: "23%", leftLg: "28%", img: "/assets/nodes/connect.png",
+      side: "right"
+    },
+    {
+      text: "Live Events",
+      desc: "Streaks' goal is to connect people with new experiences and exciting events around the world.",
+      top: "44%", leftBase: "74%", leftLg: "74%", img: "/assets/nodes/live.png",
+      side: "left"
+    },
+    {
+      text: "Exclusive Rewards",
+      desc: "Earn exclusive rewards only available in the Streaks ecosystem.",
+      top: "65%", leftBase: "30%", leftLg: "13%", img: "/assets/nodes/rewards.png",
+      side: "right"
+    },
+    {
+      text: "Endless Possibilities",
+      desc: "Tap into the shared collective experience.",
+      top: "75%", leftBase: "70%", leftLg: "87%", img: "/assets/nodes/possibilities.png",
+      side: "left"
+    },
+  ];
+
 
   useGSAP(
     () => {
@@ -125,31 +163,9 @@ export default function Descent() {
       <div className="sticky top-0 h-svh w-full">
         <MyceliumRoots className="absolute inset-0 h-full w-full" />
 
-        {NODES.map((n, i) => {
-          const left = isLg ? n.leftLg : n.leftBase;
-          return (
-            <div
-              key={i}
-              className="node absolute -translate-x-1/2 -translate-y-1/2 text-center"
-              style={{ top: n.top, left: left, willChange: "opacity, transform" }}
-            >
-              <div
-                className="mx-auto mb-3 relative rounded-full overflow-hidden w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28"
-                style={{
-                  boxShadow:
-                    "0 0 10px 3px rgba(125,255,87,0.8), 0 0 26px 8px rgba(255,122,24,0.35)",
-                  animation: `halo 2.4s ease-in-out ${i * 0.3}s infinite`,
-                  willChange: "opacity, transform",
-                }}
-              >
-                <Image src={n.img} alt="" fill sizes="112px" className="object-cover" />
-              </div>
-              <span className="font-display text-glow-green block text-lg font-semibold tracking-wide sm:text-2xl">
-                {n.text}
-              </span>
-            </div>
-          );
-        })}
+        {NODES.map((n, i) => (
+          <NodeItem key={i} n={n} i={i} isLg={isLg} />
+        ))}
 
         {/* Scroll cue — fixed to the viewport so it shows during the
             Hero→Descent transition. Visibility is driven by GSAP (autoAlpha),
@@ -184,5 +200,81 @@ export default function Descent() {
         </div>
       </div>
     </section>
+  );
+}
+
+function NodeItem({ n, i, isLg }: { n: NodeType, i: number, isLg: boolean }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const left = isLg ? n.leftLg : n.leftBase;
+
+  let positionClasses = "top-full left-1/2 -translate-x-1/2 mt-4";
+  if (isLg) {
+    switch (n.side) {
+      case "top":
+        positionClasses = "bottom-full left-1/2 -translate-x-1/2 mb-4";
+        break;
+      case "bottom":
+        positionClasses = "top-full left-1/2 -translate-x-1/2 mt-4";
+        break;
+      case "left":
+        positionClasses = "right-full top-1/2 -translate-y-1/2 mr-4";
+        break;
+      case "right":
+        positionClasses = "left-full top-1/2 -translate-y-1/2 ml-4";
+        break;
+    }
+  } else {
+    // Smart mobile positioning: align inward if near viewport edges
+    const leftVal = parseFloat(n.leftBase);
+    if (leftVal < 40) {
+      positionClasses = "top-full left-0 mt-4";
+    } else if (leftVal > 60) {
+      positionClasses = "top-full right-0 mt-4";
+    }
+  }
+
+  return (
+    <div
+      className={`node group absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center cursor-pointer outline-none touch-manipulation ${isOpen ? 'z-50' : 'z-30'} lg:hover:z-50`}
+      style={{ top: n.top, left: left, willChange: "transform" }}
+      onClick={() => { if (!isLg) setIsOpen(!isOpen); }}
+      onMouseLeave={() => { if (!isLg) setIsOpen(false); }}
+    >
+      <div className="relative">
+        <div
+          className="mx-auto relative rounded-full overflow-hidden w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 transition-transform duration-300 group-hover:scale-105"
+          style={{
+            boxShadow:
+              "0 0 10px 3px rgba(125,255,87,0.8), 0 0 26px 8px rgba(255,122,24,0.35)",
+            // animation: `halo 2.4s ease-in-out ${i * 0.3}s infinite`,
+            willChange: "opacity, transform",
+          }}
+        >
+          <Image src={n.img} alt="" fill sizes="112px" className="object-cover" />
+        </div>
+      </div>
+
+      <span className="font-display text-glow-green mt-4 block text-lg font-semibold tracking-wide sm:text-2xl whitespace-nowrap transition-colors duration-300 pointer-events-none group-hover:text-white">
+        {n.text}
+      </span>
+
+      <div
+        className={`absolute z-[100] ${positionClasses} w-[85vw] max-w-[260px] sm:max-w-[280px] md:max-w-none md:w-[320px] rounded-[20px] p-px shadow-[0_15px_40px_-10px_rgba(125,255,87,0.25)] bg-transparent transition-all duration-300 pointer-events-none ${isOpen ? "opacity-100 visible" : "opacity-0 invisible lg:group-hover:opacity-100 lg:group-hover:visible"}`}
+      >
+        <div className="absolute inset-0 bg-linear-to-br from-(--green)/70 via-transparent to-(--orange)/60 opacity-90 rounded-[20px]"></div>
+
+        <div className="relative flex flex-col gap-2 rounded-[19px] bg-[#050905]/95 backdrop-blur-3xl p-5 text-left">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-linear-to-r from-transparent via-white/40 to-transparent"></div>
+
+          <h4 className="font-display text-transparent bg-clip-text bg-linear-to-r from-(--green) to-(--white) text-[1.1rem] font-bold tracking-wide m-0 pb-2 border-b border-white/10">
+            {n.text}
+          </h4>
+
+          <p className="text-white/90 text-[0.95rem] leading-relaxed font-sans m-0 mt-1 whitespace-normal">
+            {n.desc}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }

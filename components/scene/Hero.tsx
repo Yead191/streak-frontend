@@ -127,7 +127,7 @@ export default function Hero() {
       // }}
       >
         <Image
-          src="/assets/hero/grass-bg3.png"
+          src="/assets/hero/grass-bg4.png"
           alt=""
           fill
           priority
