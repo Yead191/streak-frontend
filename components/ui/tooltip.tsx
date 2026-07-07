@@ -17,7 +17,7 @@ const TooltipContent = React.forwardRef<
     <TooltipPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}
-      className={`radix-tooltip-content z-[100] overflow-hidden ${className || ""}`}
+      className={`radix-tooltip-content z-100 overflow-hidden ${className || ""}`}
       style={{
         willChange: 'transform, opacity',
       }}

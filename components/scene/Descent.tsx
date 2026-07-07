@@ -259,7 +259,7 @@ function NodeItem({ n, i, isLg }: { n: NodeType, i: number, isLg: boolean }) {
       </span>
 
       <div
-        className={`absolute z-[100] ${positionClasses} w-[85vw] max-w-[260px] sm:max-w-[280px] md:max-w-none md:w-[320px] rounded-[20px] p-px shadow-[0_15px_40px_-10px_rgba(125,255,87,0.25)] bg-transparent transition-all duration-300 pointer-events-none ${isOpen ? "opacity-100 visible" : "opacity-0 invisible lg:group-hover:opacity-100 lg:group-hover:visible"}`}
+        className={`absolute z-100 ${positionClasses} w-[85vw] max-w-65 sm:max-w-70 md:max-w-none md:w-[320px] rounded-[20px] p-px shadow-[0_15px_40px_-10px_rgba(125,255,87,0.25)] bg-transparent transition-all duration-300 pointer-events-none ${isOpen ? "opacity-100 visible" : "opacity-0 invisible lg:group-hover:opacity-100 lg:group-hover:visible"}`}
       >
         <div className="absolute inset-0 bg-linear-to-br from-(--green)/70 via-transparent to-(--orange)/60 opacity-90 rounded-[20px]"></div>
 
