@@ -81,7 +81,11 @@ export async function POST(req: NextRequest) {
     };
 
     submissions.push(newSubmission);
-    fs.writeFileSync(filePath, JSON.stringify(submissions, null, 2), "utf8");
+    try {
+      fs.writeFileSync(filePath, JSON.stringify(submissions, null, 2), "utf8");
+    } catch (err) {
+      console.warn("Unable to write waitlist locally (read-only file system in production):", err);
+    }
 
     // Forward submission to Formspree
     const formspreeVar = process.env.FORMSPREE_ID?.trim();
