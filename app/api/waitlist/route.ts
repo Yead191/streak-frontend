@@ -87,42 +87,15 @@ export async function POST(req: NextRequest) {
       console.warn("Unable to write waitlist locally (read-only file system in production):", err);
     }
 
-    // Forward submission to Formspree
-    const formspreeVar = process.env.FORMSPREE_ID?.trim();
-    if (formspreeVar) {
-      const endpoint = formspreeVar.startsWith("http")
-        ? formspreeVar
-        : `https://formspree.io/f/${formspreeVar}`;
-
-      try {
-        const formspreeRes = await fetch(endpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            email: email.toLowerCase(),
-            phone: phone || "Not provided",
-            key: generatedKey,
-            _subject: `New Streak Waitlist Pre-Signup from ${email.toLowerCase()}`,
-          }),
-        });
-
-        if (!formspreeRes.ok) {
-          console.warn("Formspree response was not OK:", formspreeRes.statusText);
-        }
-      } catch (err) {
-        console.error("Failed to forward waitlist submission to Formspree:", err);
-      }
-    } else {
-      console.warn("FORMSPREE_ID is not configured in environment variables.");
-    }
+    // Return success along with the Formspree URL so the client browser can make the request directly.
+    // This ensures Formspree sees the actual user's browser IP/fingerprint and avoids rate-limit blocks.
+    const formspreeVar = process.env.FORMSPREE_ID?.trim() || null;
 
     return NextResponse.json({ 
       success: true, 
       message: "Successfully joined the waitlist!", 
-      key: generatedKey 
+      key: generatedKey,
+      formspreeUrl: formspreeVar
     });
   } catch (error) {
     console.error("Waitlist API error:", error);

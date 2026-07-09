@@ -107,6 +107,31 @@ export default function ComingSoon() {
       const data = await response.json();
 
       if (response.ok && data.success) {
+        // Submit directly to Formspree from client to avoid server-IP spam blocking
+        if (data.formspreeUrl && !data.alreadyExists) {
+          try {
+            const endpoint = data.formspreeUrl.startsWith("http")
+              ? data.formspreeUrl
+              : `https://formspree.io/f/${data.formspreeUrl}`;
+
+            await fetch(endpoint, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify({
+                email: email.toLowerCase(),
+                phone: phone || "Not provided",
+                key: data.key,
+                _subject: `New Streak Waitlist Pre-Signup from ${email.toLowerCase()}`,
+              }),
+            });
+          } catch (err) {
+            console.error("Browser failed to send lead to Formspree:", err);
+          }
+        }
+
         const code = data.key;
         localStorage.setItem("streak:waitlist_key", code);
         localStorage.setItem("streak:waitlist_email", email.toLowerCase());
