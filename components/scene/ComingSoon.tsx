@@ -22,15 +22,11 @@ export default function ComingSoon() {
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const [userKey, setUserKey] = useState("");
-  const [isCopied, setIsCopied] = useState(false);
 
   // Check local storage on mount
   useEffect(() => {
-    const savedKey = localStorage.getItem("streak:waitlist_key");
     const savedEmail = localStorage.getItem("streak:waitlist_email");
-    if (savedKey && savedEmail) {
-      setUserKey(savedKey);
+    if (savedEmail) {
       setStatus("success");
     }
   }, []);
@@ -97,45 +93,34 @@ export default function ComingSoon() {
     setStatus("loading");
     setErrorMessage("");
 
+    // Read Formspree ID from client environment variable or use the fallback ID from your env.local
+    const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+    if (!formspreeId) {
+      console.error("Formspree ID is not defined.");
+      setStatus("error");
+      setErrorMessage("Formspree ID is not defined.");
+      return;
+    }
+    const formspreeEndpoint = formspreeId.startsWith("http")
+      ? formspreeId
+      : `https://formspree.io/f/${formspreeId}`;
+
     try {
-      const response = await fetch("/api/waitlist", {
+      const response = await fetch(formspreeEndpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, phone }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          email: email.toLowerCase(),
+          phone: phone || "Not provided",
+          _subject: `New Streak Waitlist Pre-Signup from ${email.toLowerCase()}`,
+        }),
       });
 
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        // Submit directly to Formspree from client to avoid server-IP spam blocking
-        if (data.formspreeUrl && !data.alreadyExists) {
-          try {
-            const endpoint = data.formspreeUrl.startsWith("http")
-              ? data.formspreeUrl
-              : `https://formspree.io/f/${data.formspreeUrl}`;
-
-            await fetch(endpoint, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-              },
-              body: JSON.stringify({
-                email: email.toLowerCase(),
-                phone: phone || "Not provided",
-                key: data.key,
-                _subject: `New Streak Waitlist Pre-Signup from ${email.toLowerCase()}`,
-              }),
-            });
-          } catch (err) {
-            console.error("Browser failed to send lead to Formspree:", err);
-          }
-        }
-
-        const code = data.key;
-        localStorage.setItem("streak:waitlist_key", code);
+      if (response.ok) {
         localStorage.setItem("streak:waitlist_email", email.toLowerCase());
-        setUserKey(code);
 
         // Morph animation transition
         gsap.to(".cs-form-content", {
@@ -152,22 +137,17 @@ export default function ComingSoon() {
           },
         });
       } else {
+        const data = await response.json().catch(() => ({}));
         setStatus("error");
-        setErrorMessage(data.error || "Something went wrong. Please try again.");
+        setErrorMessage(data.error || "Formspree submission failed. Check your Formspree settings.");
       }
     } catch (err) {
       console.error(err);
       setStatus("error");
-      setErrorMessage("Could not connect to the mycelium network. Check your connection.");
+      setErrorMessage("Could not connect to Formspree. Check your network connection.");
     }
   };
 
-  const handleCopyKey = () => {
-    if (!userKey) return;
-    navigator.clipboard.writeText(userKey);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
-  };
 
   const handleLockedBadgeClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -412,39 +392,12 @@ export default function ComingSoon() {
                   You are officially locked into early access. We will alert you the moment our sprout breaks ground.
                 </p>
               </div>
-
-              {/* Access Key Display */}
-              <div className="flex w-full flex-col items-center gap-2 rounded-2xl bg-black/60 border border-white/10 p-4">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Your Early Adopter Key</span>
-                <div className="flex items-center gap-3">
-                  <code className="font-mono text-base sm:text-lg font-bold text-(--green) tracking-wide">
-                    {userKey}
-                  </code>
-                  <button
-                    onClick={handleCopyKey}
-                    aria-label="Copy access key"
-                    className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all text-white/65 hover:text-white"
-                  >
-                    {isCopied ? (
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="2.5">
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    ) : (
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                      </svg>
-                    )}
-                  </button>
-                </div>
-                {isCopied && <span className="text-[10px] text-(--green) font-semibold uppercase tracking-wider">Copied to clipboard</span>}
-              </div>
             </div>
           )}
         </div>
 
         {/* Project Roadmap Visualizer */}
-
+        {/* <EcosystemRoadmap /> */}
 
         {/* Store Badges - Locked State */}
         <div className="flex flex-col items-center">
