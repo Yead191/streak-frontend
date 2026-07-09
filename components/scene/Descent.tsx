@@ -263,7 +263,7 @@ function NodeItem({ n, i, isLg }: { n: NodeType, i: number, isLg: boolean }) {
       >
         <div className="absolute inset-0 bg-linear-to-br from-(--green)/70 via-transparent to-(--orange)/60 opacity-90 rounded-[20px]"></div>
 
-        <div className="relative flex flex-col gap-2 rounded-[19px] bg-[#050905]/95 backdrop-blur-3xl p-5 text-left">
+        <div className="relative flex flex-col gap-2 rounded-[19px] bg-[#050905] p-5 text-left">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-linear-to-r from-transparent via-white/40 to-transparent"></div>
 
           <h4 className="font-display text-transparent bg-clip-text bg-linear-to-r from-(--green) to-(--white) text-[1.1rem] font-bold tracking-wide m-0 pb-2 border-b border-white/10">

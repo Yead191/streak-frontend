@@ -1,0 +1,270 @@
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  Github,
+  Linkedin,
+  Clock,
+  CheckCircle2,
+  Loader2,
+} from "lucide-react";
+
+// Formspree form ID is read from the VITE_FORMSPREE_ID env var.
+// Set it in .env (local) and in Vercel project settings (production).
+const FORMSPREE_ENDPOINT = `https://formspree.io/f/${import.meta.env.VITE_FORMSPREE_ID}`;
+
+type SubmitStatus = "idle" | "submitting" | "success" | "error";
+
+const ContactSection = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<SubmitStatus>("idle");
+
+  const contactInfo = [
+    {
+      icon: Mail,
+      label: "Email",
+      value: "nadirhossain336@gmail.com",
+      href: "mailto:nadirhossain336@gmail.com",
+    },
+    {
+      icon: Phone,
+      label: "WhatsApp",
+      value: "+880 1756953936",
+      href: "https://wa.me/8801756953936",
+    },
+    {
+      icon: MapPin,
+      label: "Location",
+      value: "Dhaka, Bangladesh",
+      href: null,
+    },
+  ];
+
+  const socials = [
+    { icon: Github, label: "GitHub", href: "https://github.com/ohnadir" },
+    { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/ohnadir" },
+    { icon: Mail, label: "Email", href: "mailto:nadirhossain336@gmail.com" },
+  ];
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("submitting");
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          _subject: `Portfolio Contact from ${form.name}`,
+        }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  return (
+    <section
+      id="contact"
+      className="min-h-screen flex items-center justify-center py-8 lg:py-0"
+      ref={ref}
+    >
+      <div className=" container mx-auto px-6 lg:px-12">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">Get In Touch</h2>
+
+          <div className="grid lg:grid-cols-2 gap-16">
+            {/* Left Column */}
+            <div>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                I'm currently looking for new opportunities to grow and learn. Whether you have a
+                project in mind, a question, or just want to say hello, I'd love to hear from you!
+              </p>
+
+              {/* Availability + response time */}
+              <div className="flex flex-wrap items-center gap-4 mb-8">
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-sm text-primary">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+                  </span>
+                  Available for work
+                </span>
+                <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+                  <Clock size={14} className="text-primary" />
+                  Usually replies within 24 hours
+                </span>
+              </div>
+
+              <div className="space-y-4 mb-8">
+                {contactInfo.map((item) => {
+                  const Icon = item.icon;
+                  const content = (
+                    <div className="flex items-center gap-4 p-4 bg-card border border-border rounded-xl hover:border-primary/30 transition-colors">
+                      <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Icon className="text-primary" size={20} />
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground mb-0.5">{item.label}</p>
+                        <p className="text-foreground font-medium">{item.value}</p>
+                      </div>
+                    </div>
+                  );
+
+                  return item.href ? (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target={item.href.startsWith("http") ? "_blank" : undefined}
+                      rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      className="block"
+                    >
+                      {content}
+                    </a>
+                  ) : (
+                    <div key={item.label}>{content}</div>
+                  );
+                })}
+              </div>
+
+              {/* Social links */}
+              <div className="flex items-center gap-4">
+                {socials.map(({ icon: Icon, label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target={href.startsWith("http") ? "_blank" : undefined}
+                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    aria-label={label}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors duration-300 hover:border-primary/40 hover:text-primary"
+                  >
+                    <Icon className="h-5 w-5" />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Column - Contact Form */}
+            <div className="flex items-center">
+              <div className="w-full bg-card border border-border rounded-2xl p-8">
+                <h3 className="text-2xl font-semibold text-foreground mb-2">Send a Message</h3>
+                <p className="text-muted-foreground text-sm mb-6">
+                  Fill out the form and I'll get back to you as soon as possible.
+                </p>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label htmlFor="name" className="block text-sm text-muted-foreground mb-1.5">
+                      Name
+                    </label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      required
+                      value={form.name}
+                      onChange={handleChange}
+                      placeholder="Your name"
+                      className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm text-muted-foreground mb-1.5">
+                      Email
+                    </label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      value={form.email}
+                      onChange={handleChange}
+                      placeholder="you@example.com"
+                      className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="block text-sm text-muted-foreground mb-1.5">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      rows={4}
+                      value={form.message}
+                      onChange={handleChange}
+                      placeholder="Tell me about your project..."
+                      className="w-full resize-none rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={status === "submitting"}
+                    className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-accent px-8 py-3 font-medium text-primary-foreground transition-all duration-300 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {status === "submitting" ? (
+                      <>
+                        <Loader2 size={18} className="animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send
+                          size={18}
+                          className="transition-transform duration-300 group-hover:translate-x-0.5"
+                        />
+                        Send Message
+                      </>
+                    )}
+                  </button>
+
+                  {status === "success" && (
+                    <p className="flex items-center gap-2 text-sm text-green-500">
+                      <CheckCircle2 size={16} />
+                      Thanks! Your message has been sent. I'll get back to you soon.
+                    </p>
+                  )}
+                  {status === "error" && (
+                    <p className="text-sm text-red-500">
+                      Something went wrong. Please email me directly at nadirhossain336@gmail.com.
+                    </p>
+                  )}
+                </form>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default ContactSection;
