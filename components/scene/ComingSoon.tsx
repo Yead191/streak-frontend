@@ -278,8 +278,8 @@ export default function ComingSoon() {
               <div className="absolute -top-px left-1/2 h-px w-3/4 -translate-x-1/2 bg-linear-to-r from-transparent via-(--green)/50 to-transparent"></div>
 
               <div className="flex flex-col gap-1 text-left mb-2">
-                <h3 className="font-display text-lg font-bold text-white tracking-wide">Secure Private Beta Access</h3>
-                <p className="text-xs text-white/50">Enter your credentials to claim your unique seed key.</p>
+                <h3 className="font-display text-lg font-bold text-white tracking-wide">The ecosystem is almost ready</h3>
+                <p className="text-xs text-white/50">Be the first to know when Streak goes live. Drop your email and we'll let you know the moment the doors open.</p>
               </div>
 
               {/* Email Address */}
@@ -473,7 +473,7 @@ function StoreBadgeLocked({
           <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
           <path d="M7 11V7a5 5 0 0 1 10 0v4" />
         </svg>
-        <span>Phase 3</span>
+        <span>Soon</span>
       </span>
     </a>
   );
