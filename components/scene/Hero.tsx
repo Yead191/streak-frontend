@@ -121,10 +121,6 @@ export default function Hero() {
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[30vh] md:h-[90vh] lg:h-[80vh] w-full"
-      // style={{
-      //   maskImage: "linear-gradient(to bottom, transparent 0%, #000 14%)",
-      //   WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 14%)",
-      // }}
       >
         <Image
           src="/assets/hero/grass-bg4.png"
@@ -133,6 +129,13 @@ export default function Hero() {
           priority
           sizes="100vw"
           className="select-none object-cover object-top"
+        />
+        {/* Smooth dark overlay at the bottom to blend with soil ground */}
+        <div
+          className="absolute inset-x-0 bottom-0 lg:h-30.5"
+          style={{
+            background: "linear-gradient(to top, #000, transparent)",
+          }}
         />
       </div>
 
