@@ -57,7 +57,7 @@ export default function Preloader() {
       const exit = () => {
         gsap.to(el, {
           opacity: 0,
-          duration: 1.4,
+          duration: 1.6,
           ease: "power2.inOut",
           onComplete: () => {
             unlock();
@@ -83,14 +83,14 @@ export default function Preloader() {
       if (!loaded) window.addEventListener("load", onLoad, { once: true });
 
       const startedAt = performance.now();
-      const MIN_MS = 2300; // ...but always give the animation room to breathe,
-      const MAX_MS = 6000; // and never trap the visitor longer than this.
+      const MIN_MS = 5500; // extended by ~3s so the preloader stays on screen longer
+      const MAX_MS = 9000; // and never trap the visitor longer than this.
 
-      // Gentle breathing glow behind the mark — independent, looping.
+      // Gentle breathing glow behind the mark — independent, looping at a calm, slower pace.
       gsap.to(".pl-halo", {
-        scale: 1.12,
+        scale: 1.15,
         opacity: 0.85,
-        duration: 1.8,
+        duration: 2.6,
         ease: "sine.inOut",
         repeat: -1,
         yoyo: true,
@@ -98,23 +98,23 @@ export default function Preloader() {
 
       const tl = gsap.timeline();
 
-      tl.from(".pl-halo", { scale: 0.5, opacity: 0, duration: 1, ease: "power2.out" }, 0)
-        // the mark sprouts: strokes draw themselves on
+      tl.from(".pl-halo", { scale: 0.5, opacity: 0, duration: 1.4, ease: "power2.out" }, 0)
+        // the mark sprouts: strokes draw themselves on slower
         .to(
           ".pl-path",
           {
             strokeDashoffset: 0,
-            duration: 1.5,
+            duration: 2.4,
             ease: "power2.inOut",
-            stagger: 0.18,
+            stagger: 0.28,
           },
-          0.15
+          0.2
         )
         // then floods with green
         .to(
           ".pl-path",
-          { fillOpacity: 1, duration: 0.8, ease: "power1.out" },
-          "-=0.45"
+          { fillOpacity: 1, duration: 1.2, ease: "power1.out" },
+          "-=0.6"
         )
         // tagline emerges — drifts up, letters draw together, blur clears
         .fromTo(
@@ -125,18 +125,18 @@ export default function Preloader() {
             y: 0,
             letterSpacing: "0.4em",
             filter: "blur(0px)",
-            duration: 1.1,
+            duration: 1.5,
             ease: "power3.out",
             clearProps: "filter",
           },
-          "-=0.45"
+          "-=0.6"
         )
         // a glowing rule draws out beneath it
         .fromTo(
           ".pl-accent",
           { scaleX: 0, opacity: 0 },
-          { scaleX: 1, opacity: 1, duration: 0.9, ease: "power2.out" },
-          "-=0.7"
+          { scaleX: 1, opacity: 1, duration: 1.3, ease: "power2.out" },
+          "-=0.8"
         );
 
       // Once the intro plays out, wait for the page to be ready, then lift.
