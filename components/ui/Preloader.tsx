@@ -187,7 +187,7 @@ export default function Preloader() {
 
         {/* the Streak mark wrapper to prevent Safari drop-shadow clipping/breakout bugs */}
         <div
-          className="relative inline-block"
+          className="relative inline-block -translate-x-2 sm:-translate-x-2.5"
           style={{
             filter:
               "drop-shadow(0 0 18px rgba(125,255,87,0.45)) drop-shadow(0 0 46px rgba(125,255,87,0.25))",
